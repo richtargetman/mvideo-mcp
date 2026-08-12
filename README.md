@@ -47,7 +47,7 @@ npm start
 
 ## MCP client config example
 
-Use the absolute `dist/server.js` path after `npm run build`:
+Use your own absolute `dist/server.js` path after `npm run build`:
 
 ```json
 {
@@ -55,7 +55,7 @@ Use the absolute `dist/server.js` path after `npm run build`:
     "mvideo": {
       "command": "C:\\Program Files\\nodejs\\node.exe",
       "args": [
-        "G:\\Программы\\Рабочее\\Автоматизации\\mvideo\\mvideo-mcp\\dist\\server.js"
+        "<absolute-path-to>\\mvideo-mcp\\dist\\server.js"
       ],
       "env": {
         "MVIDEO_API_KEY": "<set locally>",
@@ -66,5 +66,7 @@ Use the absolute `dist/server.js` path after `npm run build`:
   }
 }
 ```
+
+Keep API keys in your local MCP client environment or shell only. Do not commit `.env` files or credentials.
 
 OpenAPI source: `https://omni-net.sellers.mvideo.ru/api-docs`.
