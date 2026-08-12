@@ -2,6 +2,8 @@
 
 Local MCP server for the M.Video / Eldorado OmniNet seller API.
 
+Больше автоматизаций для селлеров найдешь в моем Telegram-канале: https://t.me/+yNLLxBt6vZ05MDUy
+
 ## Auth
 
 The server reads the seller API key from `MVIDEO_API_KEY` and sends it as the
