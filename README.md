@@ -6,9 +6,28 @@ Local MCP server for the M.Video / Eldorado OmniNet seller API.
 
 ## Quick start
 
-Clone the repository, install dependencies, build the server, add `dist/server.js`
-to your MCP client config, pass `MVIDEO_API_KEY` through the local environment,
-restart your agent, and ask it to work with M.Video through the `mvideo` MCP.
+This is not a normal desktop app. It is a connector that lets your AI agent work
+with the M.Video / Eldorado seller API: warehouses, product mappings, prices,
+stocks, FBS orders, labels, and shipments.
+
+What you need before installation:
+
+- An M.Video / Eldorado seller API key.
+- An AI agent or MCP client that supports local MCP servers.
+- Node.js LTS installed on the computer where the agent runs.
+
+The easiest way: open your AI agent and send it this message:
+
+```text
+Install this M.Video MCP for me: https://github.com/richtargetman/mvideo-mcp
+
+Use Node.js, run npm install and npm run build, then connect dist/server.js as a local MCP server named "mvideo".
+Ask me for my MVIDEO_API_KEY only when you are ready to put it into the local MCP environment.
+Do not write the real API key into README, Git, screenshots, chat logs, or any public file.
+After installation, run mvideo_health and tell me whether the connector is ready.
+```
+
+If you install it yourself, run:
 
 ```powershell
 git clone https://github.com/richtargetman/mvideo-mcp.git
@@ -16,6 +35,16 @@ cd mvideo-mcp
 npm install
 npm run build
 ```
+
+Then add the MCP client config from the section below and restart your agent.
+
+How to check that everything works:
+
+1. Ask the agent: `Check that M.Video MCP is connected.`
+2. The agent should call `mvideo_health`.
+3. If `apiKeyPresent` is `true`, the connector sees your API key.
+4. Ask the agent: `Show my M.Video warehouses.`
+5. If warehouses are returned, the connector is ready for real work.
 
 ## Auth
 
@@ -53,9 +82,41 @@ Use `dry_run=true` first and only then repeat with `dry_run=false` and the match
 
 ## How to ask your agent
 
-After the MCP server is connected, you can ask your AI agent in normal language.
-The agent should inspect available `mvideo_*` tools, run read-only checks first,
-and use live write tools only after showing a dry-run plan.
+After the MCP server is connected, you do not need to remember tool names. Write
+to your agent like you would write to an employee: what to check, what to prepare,
+and what to change.
+
+Safe read-only examples:
+
+- `Check if the M.Video connector works.`
+- `Show my M.Video warehouses.`
+- `Find product IDs in M.Video for these seller article numbers: SC_BLACK, SC_BLUE.`
+- `Show current prices for these products.`
+- `Show current stock balances for these products.`
+- `Show new FBS orders from M.Video.`
+- `Get labels for these FBS orders.`
+
+Examples that change data:
+
+- `Prepare a stock update, but do not send it yet: set SC_BLACK to 12 and SC_BLUE to 7.`
+- `Prepare a price update, but do not send it yet: set SC_BLACK to 499 RUB.`
+- `Create a shipment for these FBS orders, but first show me the dry-run.`
+
+For any price, stock, exemplar, or shipment change, the agent must first show a
+dry-run plan. If the plan is correct, tell the agent to apply it. The connector
+will refuse dangerous write actions unless the agent sends the matching confirm
+string.
+
+Simple rule: checking data is safe; changing prices, stocks, marking data, or
+shipments must always go through dry-run first.
+
+## Agent reference
+
+This section is for AI agents and technical users.
+
+After the MCP server is connected, the agent should inspect available
+`mvideo_*` tools, run read-only checks first, and use live write tools only after
+showing a dry-run plan.
 
 Example user requests:
 
